@@ -44,4 +44,9 @@ public class Squad : MonoBehaviour, I_PassTarget
             }
         }
     }
+
+    void Move(Vector3 target, List<AI> charactersInSquad)
+    {
+
+    }
 }
