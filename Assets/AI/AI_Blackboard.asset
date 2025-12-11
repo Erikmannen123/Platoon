@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c02bb70996b49eba31d0c206e28da24, type: 3}
   m_Name: AI_Blackboard
   m_EditorClassIdentifier: 
-  VersionTimestamp: 0
+  VersionTimestamp: 639010515899708354
   AssetID:
     m_Value0: 2625086403738323871
     m_Value1: 18112284759070777464
@@ -38,7 +38,7 @@ MonoBehaviour:
     m_Value0: 2625086403738323871
     m_Value1: 18112284759070777464
   m_Variables: []
-  m_VersionTimestamp: 0
+  m_VersionTimestamp: 639010515899708354
   m_CommandBuffer:
     m_Commands: []
   m_RuntimeBlackboardAsset: {fileID: -1943113148780236880}

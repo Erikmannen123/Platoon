@@ -18,14 +18,17 @@ public class PlayerInteractions : MonoBehaviour
         interact = input.actions["Player/Attack"];
     }
 
+    private void OnDisable()
+    {
+        input.enabled = false;
+    }
+
     private void Update()
     {
         if (interact.WasPerformedThisFrame())
         {
             Clicked();
         }
-
-        
     }
 
     void Clicked()
