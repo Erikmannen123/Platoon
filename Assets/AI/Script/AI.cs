@@ -14,9 +14,11 @@ public class AI : MonoBehaviour, I_PassTarget
     NavMeshAgent agent;
     BehaviorGraphAgent behaviour;
 
-    public enum Directions { Null, North, East, South, West }
+    //public enum Directions { Null, North, East, South, West }
 
-    Directions directions = Directions.Null;
+    //Directions directions = Directions.Null;
+
+    Vector3 direction = new Vector3(0, 0, 0);
 
     public Vector3 squadDestination;
     [SerializeField] Transform targetPrefab;
@@ -44,49 +46,11 @@ public class AI : MonoBehaviour, I_PassTarget
 
     public void PassTarget(Vector3 target)
     {
-        SetNewTarget(target, 0, Directions.Null);
-    }
-
-    public void SetNewTarget(Vector3 destination, float seperation, Directions squadDir)
-    {
-        Directions dir = GetCoverDirection(directions);
-
-        if(dir == Directions.Null)
-        {
-            dir = GetCoverDirection(squadDir);
-        }
-
-        if (dir == Directions.Null)
-        {
-            SpawnSquad(destination, seperation);
-        }
-    }
-
-    //Get direction to tack cover from
-    private Directions GetCoverDirection(Directions dir)
-    {
-        switch (dir)
-        {
-            case Directions.Null:
-                return Directions.Null;
-
-            case Directions.North:
-                return Directions.North;
-
-            case Directions.East:
-                return Directions.East;
-
-            case Directions.South:
-                return Directions.South;
-
-            case Directions.West:
-                return Directions.West;
-        }
-        return Directions.Null;
+        MoveToLocation(target);
     }
 
     //Get random pos with in radius
-    private void SpawnSquad(Vector3 destination, float seperation)
+    public void MoveToRandomLocation(Vector3 destination, float seperation)
     {
         Vector3 pos = destination + Random.insideUnitSphere * seperation;
         NavMeshHit navHit;
@@ -96,4 +60,12 @@ public class AI : MonoBehaviour, I_PassTarget
         }
     }
 
+    public void MoveToLocation(Vector3 destination)
+    {
+        NavMeshHit navHit;
+        if (NavMesh.SamplePosition(destination, out navHit, 100f, NavMesh.AllAreas))
+        {
+            target.position = navHit.position;
+        }
+    }
 }

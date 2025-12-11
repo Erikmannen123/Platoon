@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Unity.AppUI.Core;
+using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.AI;
 using static AI;
@@ -17,12 +19,14 @@ public class Squad : MonoBehaviour, I_PassTarget
 
     [SerializeField] private LayerMask terrainLayer;
 
+    [SerializeField] private LayerMask CoverLayer;
+
     [SerializeField] private Vector3 DirectionToTakeCoverFrom;
 
     void I_PassTarget.PassTarget(Vector3 target)
     {
         this.target = target;
-        Move(target, charactersInSquad);
+        Move(target, seperation, charactersInSquad);
     }
 
     private void Awake()
@@ -45,11 +49,64 @@ public class Squad : MonoBehaviour, I_PassTarget
         }
     }
 
-    void Move(Vector3 target, List<AI> charactersInSquad)
+    void Move(Vector3 target, float seperation, List<AI> charactersInSquad)
     {
-        foreach(AI ai in charactersInSquad)
+        Queue<Transform> CoverPos = CoverPositions(target, seperation, DirectionToTakeCoverFrom);
+
+        foreach (AI ai in charactersInSquad)
         {
-            ai.SetNewTarget(target, seperation, AI.Directions.Null);
+            if(CoverPos.Count > 0)
+            {
+                ai.MoveToLocation(CoverPos.Peek().position);
+                CoverPos.Dequeue();
+
+                Debug.Log("iakuwjhdia");
+            }
+            else
+            {
+                ai.MoveToRandomLocation(target, seperation);
+            }
+        }
+    }
+
+    private Queue<Transform> CoverPositions(Vector3 target, float seperation, Vector3 dir)
+    {
+        Queue<Transform> transforms = new Queue<Transform>();
+
+        Collider[] hitColliders = Physics.OverlapSphere(target, seperation, CoverLayer);
+
+        foreach (var hitCollider in hitColliders)
+        {
+            if (dir == new Vector3(0, 0, 0))
+            {
+                transforms.Enqueue(hitCollider.transform);
+                break;
+            }
+            else
+            {
+                if(PositionInCover(hitCollider.transform.position, dir))
+                {
+                    transforms.Enqueue(hitCollider.transform);
+                    break;
+                }
+            }
+        }
+
+        return transforms;
+    }
+
+    private bool PositionInCover(Vector3 pos, Vector3 dir)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(pos, dir, out hit, 3f))
+        {
+            Debug.Log("hit");
+            return true;
+        }
+        else 
+        {
+            Debug.Log("noHit");
+            return false; 
         }
     }
 }
