@@ -40,9 +40,5 @@ public partial class MoveToAction : Action
             return Status.Running;
         }
     }
-
-    protected override void OnEnd()
-    {
-    }
 }
 

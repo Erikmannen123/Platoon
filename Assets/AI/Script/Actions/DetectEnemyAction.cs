@@ -86,7 +86,7 @@ public partial class DetectEnemyAction : Action
 
                 if (debug)
                 {
-                    Agent.Value.transform.GetChild(1).GetComponent<DebugScript>().SetInfo(Agent.Value.transform, Enemy.Value);
+                    Agent.Value.transform.GetChild(1).GetComponent<DebugScript>().SetLineOfSightInfo(Agent.Value.transform, Enemy.Value);
                 }
 
                 return Status.Success;
@@ -95,7 +95,7 @@ public partial class DetectEnemyAction : Action
 
         if (debug)
         {
-            Agent.Value.transform.GetChild(1).GetComponent<DebugScript>().SetInfo(null, null);
+            Agent.Value.transform.GetChild(1).GetComponent<DebugScript>().SetLineOfSightInfo(null, null);
         }
 
         return Status.Failure;

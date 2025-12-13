@@ -14,7 +14,7 @@ public class TeamDetection : MonoBehaviour
     {
         if (!colorsSet)
         {
-            SetTeam(this.gameObject.tag);
+            SetColor(this.gameObject.tag);
         }
     }
 
@@ -37,6 +37,20 @@ public class TeamDetection : MonoBehaviour
 
         child.tag = tag;
 
+
+        colorsSet = true;
+    }
+
+    public void SetColor(string tag)
+    {
+        if (tag == "Blue")
+        {
+            m_Renderer.material = Blue;
+        }
+        else
+        {
+            m_Renderer.material = Red;
+        }
 
         colorsSet = true;
     }

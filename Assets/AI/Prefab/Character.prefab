@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 8629445853917061993}
   - component: {fileID: 1417881352571970681}
   - component: {fileID: 5857184846877664710}
+  - component: {fileID: -5733662735595376695}
   m_Layer: 8
   m_Name: Character
   m_TagString: Blue
@@ -215,7 +216,7 @@ MonoBehaviour:
   squadDestination: {x: 0, y: 0, z: 0}
   targetPrefab: {fileID: 7414247018534711693, guid: c9ca0be157c245943a5f364ea2d8a134, type: 3}
   target: {fileID: 0}
-  supressed: 0
+  suppressed: 0
 --- !u!114 &5857184846877664710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,6 +233,19 @@ MonoBehaviour:
   child: {fileID: 653042510527779348}
   Blue: {fileID: 2100000, guid: f9c7078a7b7e8de48ab04956ed55ff49, type: 2}
   Red: {fileID: 2100000, guid: b24abc570c9fe184dbd764d5327866d2, type: 2}
+--- !u!114 &-5733662735595376695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120423845617834001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1093da24b87fe1946b67451140e22602, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
 --- !u!1 &5696257369288949875
 GameObject:
   m_ObjectHideFlags: 0
