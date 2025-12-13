@@ -3,7 +3,9 @@ using Unity.AppUI.Core;
 using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 using static AI;
+using static UnityEditor.PlayerSettings;
 
 public class Squad : MonoBehaviour, I_PassTarget
 {
@@ -20,6 +22,8 @@ public class Squad : MonoBehaviour, I_PassTarget
     [SerializeField] private LayerMask terrainLayer;
 
     [SerializeField] private LayerMask CoverLayer;
+
+    [SerializeField] private LayerMask CoverObjectsLayer;
 
     [SerializeField] private Vector3 DirectionToTakeCoverFrom;
 
@@ -44,52 +48,66 @@ public class Squad : MonoBehaviour, I_PassTarget
         if (NavMesh.SamplePosition(pos, out navHit, 100f, NavMesh.AllAreas))
         {
             GameObject newCharacter = Instantiate(character, navHit.position, Quaternion.identity);
-
+            newCharacter.GetComponent<TeamDetection>().SetTeam(this.gameObject.tag);
             charactersInSquad.Add(newCharacter.GetComponent<AI>());
         }
     }
 
     void Move(Vector3 target, float seperation, List<AI> charactersInSquad)
     {
-        Queue<Transform> CoverPos = CoverPositions(target, seperation, DirectionToTakeCoverFrom);
+        //For beter preformance enable this so it calculates the squad cover direction instead of the soldier cover direction
+        //Queue<Transform> CoverPos = CoverPositions(target, seperation, DirectionToTakeCoverFrom);
+
+        List<Transform> positions = CoverPositions(target, seperation);
 
         foreach (AI ai in charactersInSquad)
         {
-            if(CoverPos.Count > 0)
-            {
-                ai.MoveToLocation(CoverPos.Peek().position);
-                CoverPos.Dequeue();
+            bool foundCover = false;
 
-                Debug.Log("iakuwjhdia");
+            foreach(Transform pos in positions)
+            {
+                Vector3 dir = ai.direction;
+
+                if (dir == new Vector3(0, 0, 0))
+                {
+                    dir = DirectionToTakeCoverFrom;
+                }
+
+                if(dir == new Vector3(0, 0, 0))
+                {
+                    ai.MoveToLocation(pos.position);
+                    positions.Remove(pos);
+                    foundCover = true;
+                    break;
+                }
+
+                if (PositionInCover(pos.position, dir))
+                {
+                    ai.MoveToLocation(pos.position);
+                    //Debug.Log(pos.gameObject.name);
+                    positions.Remove(pos);
+
+                    foundCover = true;
+                    break;
+                }
             }
-            else
+
+            if (!foundCover)
             {
                 ai.MoveToRandomLocation(target, seperation);
             }
         }
     }
 
-    private Queue<Transform> CoverPositions(Vector3 target, float seperation, Vector3 dir)
+    private List<Transform> CoverPositions(Vector3 target, float seperation)
     {
-        Queue<Transform> transforms = new Queue<Transform>();
+        List<Transform> transforms = new List<Transform>();
 
         Collider[] hitColliders = Physics.OverlapSphere(target, seperation, CoverLayer);
 
         foreach (var hitCollider in hitColliders)
         {
-            if (dir == new Vector3(0, 0, 0))
-            {
-                transforms.Enqueue(hitCollider.transform);
-                break;
-            }
-            else
-            {
-                if(PositionInCover(hitCollider.transform.position, dir))
-                {
-                    transforms.Enqueue(hitCollider.transform);
-                    break;
-                }
-            }
+            transforms.Add(hitCollider.transform);
         }
 
         return transforms;
@@ -98,14 +116,14 @@ public class Squad : MonoBehaviour, I_PassTarget
     private bool PositionInCover(Vector3 pos, Vector3 dir)
     {
         RaycastHit hit;
-        if (Physics.Raycast(pos, dir, out hit, 3f))
+        if (Physics.Raycast(pos, dir, out hit, 3f, CoverObjectsLayer))
         {
-            Debug.Log("hit");
+            //Debug.Log("hit");
             return true;
         }
         else 
         {
-            Debug.Log("noHit");
+            //Debug.Log("noHit");
             return false; 
         }
     }

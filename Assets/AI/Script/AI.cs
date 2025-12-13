@@ -18,11 +18,13 @@ public class AI : MonoBehaviour, I_PassTarget
 
     //Directions directions = Directions.Null;
 
-    Vector3 direction = new Vector3(0, 0, 0);
+    public Vector3 direction = new Vector3(0, 0, 0);
 
     public Vector3 squadDestination;
     [SerializeField] Transform targetPrefab;
     public Transform target;
+
+    public float suppressed = 0;
 
     void Awake()
     {
