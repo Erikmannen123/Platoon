@@ -989,7 +989,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &752083856
 Transform:
   m_ObjectHideFlags: 0
@@ -1472,7 +1472,7 @@ MonoBehaviour:
   character: {fileID: 1120423845617834001, guid: c94fc55ff124b67439d7cb7230e00a2f, type: 3}
   charactersInSquad: []
   seperation: 10
-  SquadCount: 10
+  SquadCount: 100
   terrainLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -2747,7 +2747,7 @@ MonoBehaviour:
   character: {fileID: 1120423845617834001, guid: c94fc55ff124b67439d7cb7230e00a2f, type: 3}
   charactersInSquad: []
   seperation: 10
-  SquadCount: 10
+  SquadCount: 100
   terrainLayer:
     serializedVersion: 2
     m_Bits: 64

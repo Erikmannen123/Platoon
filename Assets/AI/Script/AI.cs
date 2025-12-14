@@ -24,8 +24,6 @@ public class AI : MonoBehaviour, I_PassTarget
     [SerializeField] Transform targetPrefab;
     public Transform target;
 
-    public float suppressed = 0;
-
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();

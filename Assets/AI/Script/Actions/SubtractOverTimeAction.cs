@@ -29,9 +29,9 @@ public partial class SubtractOverTimeAction : Action
         return Status.Success;
     }
 
-    float Subtract()
+    void Subtract()
     {
-        return Value.Value - (ValueOverTime.Value * Time.deltaTime);
+        Value.Value -= (ValueOverTime.Value * Time.deltaTime);
     }
 }
 

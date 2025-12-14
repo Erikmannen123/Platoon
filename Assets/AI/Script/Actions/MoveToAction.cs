@@ -29,7 +29,7 @@ public partial class MoveToAction : Action
 
         float dist = Vector3.Distance(Target.Value.position, Agent.Value.transform.position);
 
-        if(dist <= 0.2f)
+        if(dist <= 0.5f)
         {
             return Status.Success;
         }
@@ -41,4 +41,3 @@ public partial class MoveToAction : Action
         }
     }
 }
-

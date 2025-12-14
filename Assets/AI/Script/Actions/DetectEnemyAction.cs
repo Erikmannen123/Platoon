@@ -24,6 +24,9 @@ public partial class DetectEnemyAction : Action
     [Tooltip("Distance of detection")]
     [SerializeReference] public BlackboardVariable<float> DetectionDistance;
 
+    [Tooltip("last seen pos")]
+    [SerializeReference] public BlackboardVariable<Vector3> LastKnownPos;
+
     [Tooltip("Debug")]
     [SerializeReference] public BlackboardVariable<bool> debug;
 
@@ -84,6 +87,8 @@ public partial class DetectEnemyAction : Action
 
                 Enemy.Value = hitTransforms[closestIndex];
 
+                LastKnownPos.Value = Enemy.Value.position;
+
                 if (debug)
                 {
                     Agent.Value.transform.GetChild(1).GetComponent<DebugScript>().SetLineOfSightInfo(Agent.Value.transform, Enemy.Value);
@@ -99,10 +104,6 @@ public partial class DetectEnemyAction : Action
         }
 
         return Status.Failure;
-    }
-
-    protected override void OnEnd()
-    {
     }
 }
 
