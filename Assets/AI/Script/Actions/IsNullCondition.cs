@@ -10,7 +10,7 @@ public partial class IsNullCondition : Condition
 
     public override bool IsTrue()
     {
-        if (Value == null)
+        if (Value.ObjectValue == null)
         {
             return false;
         }

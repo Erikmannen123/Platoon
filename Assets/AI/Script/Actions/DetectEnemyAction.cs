@@ -103,7 +103,9 @@ public partial class DetectEnemyAction : Action
             Agent.Value.transform.GetChild(1).GetComponent<DebugScript>().SetLineOfSightInfo(null, null);
         }
 
-        return Status.Failure;
+
+        Enemy.Value = null;
+        return Status.Success;
     }
 }
 
