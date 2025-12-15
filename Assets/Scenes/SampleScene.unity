@@ -1885,7 +1885,7 @@ MonoBehaviour:
   character: {fileID: 1120423845617834001, guid: c94fc55ff124b67439d7cb7230e00a2f, type: 3}
   charactersInSquad: []
   seperation: 10
-  SquadCount: 100
+  SquadCount: 10
   terrainLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -3690,7 +3690,7 @@ MonoBehaviour:
   character: {fileID: 1120423845617834001, guid: c94fc55ff124b67439d7cb7230e00a2f, type: 3}
   charactersInSquad: []
   seperation: 10
-  SquadCount: 100
+  SquadCount: 10
   terrainLayer:
     serializedVersion: 2
     m_Bits: 64
