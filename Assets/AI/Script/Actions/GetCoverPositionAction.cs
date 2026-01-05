@@ -62,12 +62,27 @@ public partial class GetCoverPositionAction : Action
 
             
 
-            Vector3 pos = new Vector3(0,0,0);
+            Vector3 closestPos = new Vector3(0,0,0);
 
             if(positionsInCover.Count > 0)
             {
+                float closestDist = 0;
+
+                foreach(Transform transform in positionsInCover)
+                {
+                    float dist = Vector3.Distance(Agent.Value.transform.position, transform.position);
+
+                    if(dist <= closestDist || closestDist == 0f)
+                    {
+                        closestDist = dist;
+                        closestPos = transform.position;
+                    }
+                }
+
+                /*
                 int index = UnityEngine.Random.Range(0, positionsInCover.Count);
                 pos = positionsInCover[index].position;
+                */
             }
             else
             {
@@ -76,7 +91,7 @@ public partial class GetCoverPositionAction : Action
             }
 
             NavMeshHit navHit;
-            if (NavMesh.SamplePosition(pos, out navHit, 100f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(closestPos, out navHit, 100f, NavMesh.AllAreas))
             {
                 Target.Value.position = navHit.position;
             }

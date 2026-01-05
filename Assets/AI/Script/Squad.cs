@@ -27,6 +27,8 @@ public class Squad : MonoBehaviour, I_PassTarget
 
     [SerializeField] private Vector3 DirectionToTakeCoverFrom;
 
+    [SerializeField] private Spawn spawn;
+
     void I_PassTarget.PassTarget(Vector3 target)
     {
         this.target = target;
@@ -49,6 +51,8 @@ public class Squad : MonoBehaviour, I_PassTarget
         {
             GameObject newCharacter = Instantiate(character, navHit.position, Quaternion.identity);
             newCharacter.GetComponent<TeamDetection>().SetTeam(this.gameObject.tag);
+            newCharacter.GetComponent<AI>().Squad = this.transform;
+            newCharacter.GetComponent<Health>().spawn = spawn;
             charactersInSquad.Add(newCharacter.GetComponent<AI>());
         }
     }

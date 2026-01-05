@@ -9,32 +9,41 @@ using UnityEngine.AI;
 [NodeDescription(name: "RotateTowards", story: "Rotate Agent", category: "Action", id: "c40280397f68eda0fdda21b0a0687ae4")]
 public partial class RotateTowardsAction : Action
 {
-    [Tooltip("The GameObject to show the text over.")]
     [SerializeReference] public BlackboardVariable<NavMeshAgent> Agent;
 
-    [Tooltip("The GameObject to show the text over.")]
     [SerializeReference] public BlackboardVariable<Transform> Enemy;
 
-    [Tooltip("The GameObject to show the text over.")]
     [SerializeReference] public BlackboardVariable<Vector3> LastKnownPos;
 
-    [Tooltip("The GameObject to show the text over.")]
+    [SerializeReference] public BlackboardVariable<Vector3> TakingFireFrom;
+
     [SerializeReference] public BlackboardVariable<float> Angel;
 
     protected override Status OnUpdate()
     {
-        Vector3 target;
+        Vector3 target = new Vector3(0, 0, 0);
+
+        Vector3 direction;
 
         if (Enemy.Value != null)
         {
             target = Enemy.Value.position;
+            direction = (target - Agent.Value.transform.position).normalized;
+        }
+        else if(LastKnownPos.Value != Vector3.zero)
+        {
+            target = LastKnownPos.Value;
+            direction = (target - Agent.Value.transform.position).normalized;
+        }
+        else if (TakingFireFrom.Value != Vector3.zero)
+        {
+            direction = TakingFireFrom;
         }
         else
         {
-            target = LastKnownPos.Value;
+            return Status.Failure;
         }
 
-        Vector3 direction = (target - Agent.Value.transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         Agent.Value.transform.rotation = Quaternion.Slerp(Agent.Value.transform.rotation, lookRotation, Time.deltaTime * 5);
 

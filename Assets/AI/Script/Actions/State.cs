@@ -6,6 +6,7 @@ public enum State
 {
     Walking,
 	MoveToAttackPos,
+	SuppressPos,
 	Shooting,
 	Flee,
 	Suppressed

@@ -221,7 +221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c663bc3be678129469302faade13fde8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  states: 0
   direction: {x: 0, y: 0, z: 0}
   squadDestination: {x: 0, y: 0, z: 0}
   targetPrefab: {fileID: 7414247018534711693, guid: c9ca0be157c245943a5f364ea2d8a134, type: 3}

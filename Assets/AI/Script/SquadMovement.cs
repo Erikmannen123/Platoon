@@ -29,7 +29,10 @@ public class SquadMovement : MonoBehaviour
 
         foreach(var AI in squad.charactersInSquad)
         {
-            CharacterPos.Add(AI.transform.position);
+            if (AI.gameObject.activeSelf)
+            {
+                CharacterPos.Add(AI.transform.position);
+            }
         }
 
         Vector3 median = GetMeanVector(CharacterPos);
